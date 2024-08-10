@@ -49,4 +49,98 @@ model User {
   image    String?
   accounts Account[]
   sessions Session[]
+
+  CommentVote CommentVote[]
+
+  Post Post[]
+
+  Comment Comment[]
+
+  Vote Vote[]
+
+  Subscription Subscription[]
+
+  createdSubreddits Subreddit[] @relation("CreatedBy")
+}
+
+
+model Subreddit { 
+  id String @id @default(cuid()) @map("_id")
+  name String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts Post[]
+
+  creatorId String?
+  creator User? @relation("CreatedBy",fields: [creatorId],references: [id])
+  subscribers Subscription[]
+
+  @@index([name])
+}
+
+model Subscription {
+  id String @id @default(cuid()) @map("_id")
+  user User @relation(fields: [userId], references: [id])
+  userId String
+  subreddit Subreddit @relation(fields: [subredditId],references: [id])
+  subredditId String
+
+}
+
+model Post {
+  id String @id @default(cuid()) @map("_id")
+  title String
+  content Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  subreddit Subreddit @relation(fields: [subredditId], references: [id])
+  subredditId String
+
+  author User @relation(fields: [authorId], references: [id])
+  authorId String
+
+  comments Comment[]
+
+  votes Vote[]
+}
+
+model Comment {
+  id String @id @default(cuid()) @map("_id")
+  text String
+  createdAt DateTime @default(now())
+  author User @relation(fields: [authorId],references: [id])
+  authorId String
+  post Post @relation(fields: [postId],references: [id])
+  postId String
+
+  replyToId String?
+  replyTo Comment? @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies Comment[] @relation("ReplyTo")
+
+  votes CommentVote[]
+  commentId String?
+}
+
+model Vote{
+  id String @id @default(cuid())@map("_id")
+  user User @relation(fields: [userId],references: [id])
+  userId String
+  post Post @relation(fields: [postId],references: [id])
+  postId String
+  type VoteType
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
+model CommentVote {
+  id String @id @default(cuid()) @map("_id")
+  user User @relation(fields: [userId],references: [id])
+  userId String
+  comment Comment @relation(fields: [commentId],references: [id])
+  commentId String
+  type VoteType
+
 }
