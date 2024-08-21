@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "@/components/ui/Toaster";
 import { ReactQueryProvider } from "@/context/ReactQueryProvider";
+import AuthSessionProvider from "@/context/SessionProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,15 +31,17 @@ export default function RootLayout({
     >
       <body className="min-h-screen pt-12 bg-slate-50 antialiased">
         <ReactQueryProvider>
-          <Navbar />
+          <AuthSessionProvider>
+            <Navbar />
 
-          {authModal}
+            {authModal}
 
-          <div className="container max-w-7xl mx-auto h-full pt-12">
-            {children}
-          </div>
+            <div className="container max-w-7xl mx-auto h-full pt-12">
+              {children}
+            </div>
 
-          <Toaster />
+            <Toaster />
+          </AuthSessionProvider>
         </ReactQueryProvider>
       </body>
     </html>
