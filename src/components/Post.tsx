@@ -46,7 +46,7 @@ const Post = ({
                 <span className="px-1">.</span>
               </>
             ) : null}
-            <span>Post by u/{post.author.name}</span>{" "}
+            <span>Post by u/{post.author.username}</span>{" "}
             {formatTimeToNow(new Date(post.createdAt))}
           </div>
 
