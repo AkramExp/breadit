@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import debounce from "lodash.debounce";
 import { Users } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   Command,
   CommandEmpty,
@@ -13,6 +13,7 @@ import {
   CommandItem,
   CommandList,
 } from "./ui/Command";
+import { useOnClickOutside } from "@/hooks/use-on-click-outside";
 
 const SearchBar = () => {
   const [input, setInput] = useState("");
@@ -42,6 +43,17 @@ const SearchBar = () => {
   const debounceRequest = useCallback(() => {
     request();
   }, []);
+
+  const commandRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
+
+  useOnClickOutside(commandRef, () => {
+    setInput("");
+  });
+
+  useEffect(() => {
+    setInput("");
+  }, [pathname]);
 
   return (
     <Command className="relative rounded-lg border max-w-lg z-50 overflow-visible">
