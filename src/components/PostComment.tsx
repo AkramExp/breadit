@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useRef } from "react";
-import UserAvatar from "./UserAvatar";
-import { Comment, CommentVote, User } from "@prisma/client";
 import { formatTimeToNow } from "@/lib/utils";
+import { Comment, CommentVote, User, VoteType } from "@prisma/client";
+import { useRef } from "react";
+import CommentVotes from "./CommentVotes";
+import UserAvatar from "./UserAvatar";
 
 type ExtendedComment = Comment & {
   votes: CommentVote[];
@@ -12,9 +13,17 @@ type ExtendedComment = Comment & {
 
 interface PostCommentProps {
   comment: ExtendedComment;
+  votesAmt: number;
+  currentVote: CommentVote | undefined;
+  postId: string;
 }
 
-const PostComment = ({ comment }: PostCommentProps) => {
+const PostComment = ({
+  comment,
+  votesAmt,
+  currentVote,
+  postId,
+}: PostCommentProps) => {
   const commentRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -39,6 +48,14 @@ const PostComment = ({ comment }: PostCommentProps) => {
       </div>
 
       <p className="text-sm text-zinc-900 mt-2">{comment.text}</p>
+
+      <div className="flex gap-2 items-center">
+        <CommentVotes
+          commentId={comment.id}
+          initialVotesAmt={votesAmt}
+          initialVote={currentVote}
+        />
+      </div>
     </div>
   );
 };
