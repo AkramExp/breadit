@@ -71,7 +71,11 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
     },
   });
   return (
-    <form onSubmit={handleSubmit(() => {})}>
+    <form
+      onSubmit={handleSubmit((e) => {
+        updateUsername(e);
+      })}
+    >
       <Card>
         <CardHeader>
           <CardTitle>Your username</CardTitle>
