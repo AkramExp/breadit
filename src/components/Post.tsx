@@ -8,7 +8,7 @@ import PostVoteClient from "./post-vote/PostVoteClient";
 type PartialVote = Pick<Vote, "type">;
 
 type PostProps = {
-  subredditName: string;
+  subredditName?: string;
   post: PostType & { author: User; votes: Vote[] };
   commentAmt: number;
   votesAmt: number;
