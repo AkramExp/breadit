@@ -96,7 +96,7 @@ export async function PATCH(req: Request) {
 
     if (votesAmt >= 1) {
       const cachedPayload: any = {
-        authorUseranme: post.author.username ?? "",
+        authorUseraname: post.author.username ?? "",
         content: JSON.stringify(post.content),
         title: post.title,
         currentVote: VoteType || null,

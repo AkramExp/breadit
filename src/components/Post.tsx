@@ -26,13 +26,13 @@ const Post = ({
 
   return (
     <div className="rounded-md bg-white shadow">
-      <div className="px-6 py-4 flex justify-between">
+      <div className="px-6 py-4 flex flex-col sm:flex-row justify-between">
         <PostVoteClient
           postId={post.id}
           initialVotesAmt={votesAmt}
           initialVote={currentVote?.type}
         />
-        <div className="w-0 flex-1">
+        <div className="w-full sm:w-0 -order-10 sm:order-1 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
             {subredditName ? (
               <>
@@ -56,11 +56,11 @@ const Post = ({
             </h1>
           </a>
 
-          <EditorOutput content={post.content} />
           <div
             className="relative text-sm max-h-40 w-full overflow-clip"
             ref={pRef}
           >
+            <EditorOutput content={post.content} />
             {pRef.current?.clientHeight === 160 ? (
               <div className="absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-white to-transparent" />
             ) : null}

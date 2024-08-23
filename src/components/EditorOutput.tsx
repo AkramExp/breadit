@@ -1,13 +1,22 @@
+"use client";
+
+import { FC } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React from "react";
 
 const Output = dynamic(
   async () => (await import("editorjs-react-renderer")).default,
-  {
-    ssr: false,
-  }
+  { ssr: false }
 );
+
+interface EditorOutputProps {
+  content: any;
+}
+
+const renderers = {
+  image: CustomImageRenderer,
+  code: CustomCodeRenderer,
+};
 
 const style = {
   paragraph: {
@@ -16,27 +25,20 @@ const style = {
   },
 };
 
-const renderers = {
-  image: CustomImageRenderer,
-  code: CustomCodeRendered,
-};
-
-type EditorOutputProps = {
-  content: any;
-};
-
-const EditorOutput = ({ content }: EditorOutputProps) => {
+const EditorOutput: FC<EditorOutputProps> = ({ content }) => {
   return (
     <Output
-      data={content}
       style={style}
       className="text-sm"
       renderers={renderers}
+      data={content}
     />
   );
 };
 
-function CustomCodeRendered({ data }: any) {
+export default EditorOutput;
+
+function CustomCodeRenderer({ data }: any) {
   return (
     <pre className="bg-gray-800 rounded-md p-4">
       <code className="text-gray-100 text-sm">{data.code}</code>
@@ -48,10 +50,8 @@ function CustomImageRenderer({ data }: any) {
   const src = data.file.url;
 
   return (
-    <div className="relative w-full min-h-[15rem]">
+    <div className="relative w-full min-h-[10rem] sm:min-h-[15rem]">
       <Image alt="image" className="object-contain" fill src={src} />
     </div>
   );
 }
-
-export default EditorOutput;

@@ -60,21 +60,22 @@ const PostFeed = ({ initialPosts, subredditName }: PostFeedProps) => {
 
         if (index === posts.length - 1) {
           return (
-            <li key={post.id} ref={ref}>
+            <div key={post.id} ref={ref}>
               <Post
                 commentAmt={post.comments.length}
-                subredditName={subredditName}
+                subredditName={post.subreddit.name}
                 post={post}
                 currentVote={currentVote}
                 votesAmt={votesAmt}
               />
-            </li>
+            </div>
           );
         } else {
           return (
             <Post
+              key={post.id}
               commentAmt={post.comments.length}
-              subredditName={subredditName}
+              subredditName={post.subreddit.name}
               post={post}
               currentVote={currentVote}
               votesAmt={votesAmt}

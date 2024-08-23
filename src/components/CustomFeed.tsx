@@ -1,7 +1,6 @@
 import { INFINITE_SCROLLING_PAGINATION_RESULTS } from "@/config";
 import { getAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
-import React from "react";
 import PostFeed from "./PostFeed";
 
 const CustomFeed = async () => {

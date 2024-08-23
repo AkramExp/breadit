@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { Label } from "./ui/Label";
 import { Textarea } from "./ui/Textarea";
@@ -26,6 +28,8 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
         text,
         replyToId,
       };
+
+      console.log(payload);
 
       const { data } = await axios.patch(
         `/api/subreddit/post/comment`,

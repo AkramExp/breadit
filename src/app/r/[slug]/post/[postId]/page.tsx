@@ -35,6 +35,8 @@ const page = async ({ params }: pageProps) => {
 
   if (!post && !cachedPost) return notFound();
 
+  console.log(cachedPost);
+
   return (
     <div>
       <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">

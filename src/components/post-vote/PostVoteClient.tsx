@@ -64,18 +64,16 @@ const PostVoteClient = ({
         setCurrentVote(undefined);
         if (type === "UP") setVotesAmt((prev) => prev - 1);
         else if (type === "DOWN") setVotesAmt((prev) => prev + 1);
-        else {
-          setCurrentVote(type);
-          if (type === "UP")
-            setVotesAmt((prev) => prev + (currentVote ? 2 : 1));
-          else if (type === "DOWN")
-            setVotesAmt((prev) => prev - (currentVote ? 2 : 1));
-        }
+      } else {
+        setCurrentVote(type);
+        if (type === "UP") setVotesAmt((prev) => prev + (currentVote ? 2 : 1));
+        else if (type === "DOWN")
+          setVotesAmt((prev) => prev - (currentVote ? 2 : 1));
       }
     },
   });
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0">
+    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0 mt-4 sm:mt-0">
       <Button
         size="sm"
         variant="ghost"

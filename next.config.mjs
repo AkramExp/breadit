@@ -9,6 +9,12 @@ const nextConfig = {
         port: "",
         pathname: "**",
       },
+      {
+        protocol: "https",
+        hostname: "utfs.io", // Added uploadthing.com
+        port: "",
+        pathname: "**",
+      },
     ],
   },
 };
