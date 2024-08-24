@@ -40,13 +40,15 @@ const page = async ({ params }: pageProps) => {
 
   return (
     <div>
-      <div className="shadow-lg h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
+      <div className="shadow-md h-full flex flex-col sm:flex-row items-center sm:items-start justify-between border-[1px] border-gray-200 rounded-sm">
         <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
-          <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
-            Post by u/{post?.author.username! ?? cachedPost?.authorUsername}{" "}
-            {formatTimeToNow(
-              new Date(post?.createdAt! ?? cachedPost?.createdAt)
-            )}
+          <p className="max-h-40 mt-1 truncate text-xs text-gray-500 flex items-center">
+            Post by u/{post?.author.username! ?? cachedPost?.authorUsername}
+            <span className="ml-2">
+              {formatTimeToNow(
+                new Date(post?.createdAt! ?? cachedPost?.createdAt)
+              )}
+            </span>
           </p>
           <h1 className="text-xl font-semibold py-2 leading-6 text-gray-900">
             {post?.title! ?? cachedPost?.title}

@@ -53,7 +53,7 @@ const UserAccountNav = ({ user }: UserAccountNavProps) => {
         </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
-          <Link href="/settings">Settings</Link>
+          <Link href="/settings">Update Username</Link>
         </DropdownMenuItem>
         {/* </div> */}
 
