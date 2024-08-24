@@ -73,7 +73,15 @@ const PostVoteClient = ({
     },
   });
   return (
-    <div className="flex sm:flex-col gap-4 sm:gap-0 pr-6 sm:w-20 pb-4 sm:pb-0 mt-4 sm:mt-0">
+    <div
+      className={cn(
+        "flex bg-[#e5ebee] rounded-full text-black",
+        {
+          "bg-emerald-500 text-white": currentVote === "UP",
+        },
+        { "bg-red-500 text-white": currentVote === "DOWN" }
+      )}
+    >
       <Button
         size="sm"
         variant="ghost"
@@ -81,15 +89,17 @@ const PostVoteClient = ({
         onClick={() => vote("UP")}
       >
         <ArrowBigUp
-          className={cn("h-5 w-5 text-zinc-700", {
-            "text-emerald-500 fill-emerald-500": currentVote === "UP",
-          })}
+          className={cn(
+            "h-5 w-5 ",
+            {
+              "fill-white": currentVote === "UP",
+            },
+            { "text-white": currentVote }
+          )}
         />
       </Button>
 
-      <p className="text-center py-2 font-medium text-sm text-zinc-900">
-        {votesAmt}
-      </p>
+      <p className="text-center py-2 font-medium text-sm">{votesAmt}</p>
 
       <Button
         size="sm"
@@ -98,9 +108,13 @@ const PostVoteClient = ({
         onClick={() => vote("DOWN")}
       >
         <ArrowBigDown
-          className={cn("h-5 w-5 text-zinc-700", {
-            "text-red-500 fill-red-500": currentVote === "DOWN",
-          })}
+          className={cn(
+            "h-5 w-5",
+            {
+              "fill-white": currentVote === "DOWN",
+            },
+            { "text-white": currentVote }
+          )}
         />
       </Button>
     </div>

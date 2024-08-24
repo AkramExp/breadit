@@ -31,6 +31,7 @@ export async function PATCH(req: Request) {
       include: {
         author: true,
         votes: true,
+        comments: true,
       },
     });
 
@@ -72,6 +73,7 @@ export async function PATCH(req: Request) {
           currentVote: VoteType || null,
           createdAt: post.createdAt,
           id: post.id,
+          commentsAmt: post.comments.length,
         };
 
         await redis.hset(`post:${postId}`, cachedPayload);
@@ -102,6 +104,7 @@ export async function PATCH(req: Request) {
         currentVote: VoteType || null,
         createdAt: post.createdAt,
         id: post.id,
+        commentsAmt: post.comments.length,
       };
 
       await redis.hset(`post:${postId}`, cachedPayload);

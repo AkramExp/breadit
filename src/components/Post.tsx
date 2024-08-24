@@ -27,11 +27,6 @@ const Post = ({
   return (
     <div className="rounded-md bg-white shadow">
       <div className="px-6 py-4 flex flex-col sm:flex-row justify-between">
-        <PostVoteClient
-          postId={post.id}
-          initialVotesAmt={votesAmt}
-          initialVote={currentVote?.type}
-        />
         <div className="w-full sm:w-0 -order-10 sm:order-1 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
             {subredditName ? (
@@ -68,7 +63,12 @@ const Post = ({
         </div>
       </div>
 
-      <div className="bg-gray-50 z-20 text-sm p-4 sm:px-6">
+      <div className="bg-gray-50 z-20 text-sm p-4 sm:px-6 flex gap-4">
+        <PostVoteClient
+          postId={post.id}
+          initialVotesAmt={votesAmt}
+          initialVote={currentVote?.type}
+        />
         <a
           href={`/r/${subredditName}/post/${post.id}`}
           className="w-fit flex items-center gap-2"

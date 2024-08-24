@@ -21,7 +21,7 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const UserAccountNav = ({ user }: UserAccountNavProps) => {
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger>
         <UserAvatar
           className="h-8 w-8"

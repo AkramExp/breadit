@@ -1,15 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
-import { Label } from "./ui/Label";
-import { Textarea } from "./ui/Textarea";
-import { Button } from "./ui/Button";
-import { useMutation } from "@tanstack/react-query";
-import { CommentRequest } from "@/lib/validators/comment";
-import axios, { AxiosError } from "axios";
 import { useCustomToast } from "@/hooks/use-custom-toast";
 import { toast } from "@/hooks/use-toast";
+import { CommentRequest } from "@/lib/validators/comment";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Button } from "./ui/Button";
+import { Label } from "./ui/Label";
+import { Textarea } from "./ui/Textarea";
 
 interface CreateCommentProps {
   postId: string;
@@ -20,6 +21,7 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
   const [input, setInput] = useState("");
   const { loginToast } = useCustomToast();
   const router = useRouter();
+  const [showBox, setShowBox] = useState(false);
 
   const { mutate: comment, isPending } = useMutation({
     mutationFn: async ({ postId, text, replyToId }: CommentRequest) => {
@@ -28,8 +30,6 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
         text,
         replyToId,
       };
-
-      console.log(payload);
 
       const { data } = await axios.patch(
         `/api/subreddit/post/comment`,
@@ -54,30 +54,43 @@ const CreateComment = ({ postId, replyToId }: CreateCommentProps) => {
     onSuccess: () => {
       router.refresh();
       setInput("");
+      setShowBox(false);
     },
   });
 
   return (
-    <div className="grid w-full gap-1.5">
-      <Label htmlFor="comment">Your comment</Label>
-      <div className="mt-2">
-        <Textarea
-          id="comment"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="What are your thoughts?"
-        />
+    <div>
+      {!showBox ? (
+        <Button className="w-full" onClick={() => setShowBox(true)}>
+          <Plus />
+          Add Comment
+        </Button>
+      ) : (
+        <div className="grid w-full gap-1.5">
+          <Label htmlFor="comment">Your comment</Label>
+          <div className="mt-2">
+            <Textarea
+              id="comment"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="What are your thoughts?"
+            />
 
-        <div className="mt-2 flex justify-end">
-          <Button
-            isLoading={isPending}
-            disabled={input.length === 0}
-            onClick={() => comment({ postId, replyToId, text: input })}
-          >
-            Post
-          </Button>
+            <div className="mt-2 flex justify-end gap-3">
+              <Button variant="subtle" onClick={() => setShowBox(false)}>
+                Cancel
+              </Button>
+              <Button
+                isLoading={isPending}
+                disabled={input.length === 0}
+                onClick={() => comment({ postId, replyToId, text: input })}
+              >
+                Post
+              </Button>
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

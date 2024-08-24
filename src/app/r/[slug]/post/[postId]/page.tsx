@@ -5,10 +5,10 @@ import { buttonVariants } from "@/components/ui/Button";
 import { db } from "@/lib/db";
 import { redis } from "@/lib/redis";
 import { formatTimeToNow } from "@/lib/utils";
-import { Post, User, Vote } from "@prisma/client";
-import { ArrowBigDown, ArrowBigUp, Loader2 } from "lucide-react";
+import { Comment, Post, User, Vote } from "@prisma/client";
+import { ArrowBigDown, ArrowBigUp, Loader2, MessageSquare } from "lucide-react";
 import { notFound } from "next/navigation";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
 
 type pageProps = {
   params: {
@@ -19,7 +19,9 @@ type pageProps = {
 const page = async ({ params }: pageProps) => {
   const cachedPost = await redis.hgetall(`post:${params.postId}`);
 
-  let post: (Post & { votes: Vote[]; author: User }) | null = null;
+  let post:
+    | (Post & { votes: Vote[]; author: User; comments: Comment[] })
+    | null = null;
 
   if (!cachedPost) {
     post = await db.post.findFirst({
@@ -29,31 +31,16 @@ const page = async ({ params }: pageProps) => {
       include: {
         votes: true,
         author: true,
+        comments: true,
       },
     });
   }
 
   if (!post && !cachedPost) return notFound();
 
-  console.log(cachedPost);
-
   return (
     <div>
-      <div className="h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
-        <Suspense fallback={<PostVoteShell />}>
-          <PostVoteServer
-            postId={post?.id! ?? cachedPost?.id}
-            getData={async () => {
-              return await db.post.findUnique({
-                where: {
-                  id: params.postId,
-                },
-                include: { votes: true },
-              });
-            }}
-          />
-        </Suspense>
-
+      <div className="shadow-lg h-full flex flex-col sm:flex-row items-center sm:items-start justify-between">
         <div className="sm:w-0 w-full flex-1 bg-white p-4 rounded-sm">
           <p className="max-h-40 mt-1 truncate text-xs text-gray-500">
             Post by u/{post?.author.username! ?? cachedPost?.authorUsername}{" "}
@@ -66,6 +53,26 @@ const page = async ({ params }: pageProps) => {
           </h1>
 
           <EditorOutput content={post?.content! ?? cachedPost?.content} />
+
+          <div className="flex justify-start mt-6 gap-3">
+            <Suspense fallback={<PostVoteShell />}>
+              <PostVoteServer
+                postId={post?.id! ?? cachedPost?.id}
+                getData={async () => {
+                  return await db.post.findUnique({
+                    where: {
+                      id: params.postId,
+                    },
+                    include: { votes: true },
+                  });
+                }}
+              />
+            </Suspense>
+            <div className="w-fit flex items-center gap-2 bg-[#e5ebee] rounded-full px-3">
+              <MessageSquare className="h-4 w-4" />
+              {post?.comments.length! ?? cachedPost?.commentsAmt}
+            </div>
+          </div>
 
           <Suspense
             fallback={
@@ -82,7 +89,7 @@ const page = async ({ params }: pageProps) => {
 
 function PostVoteShell() {
   return (
-    <div className="flex items-center flex-col pr-6 w-20">
+    <div className="flex bg-[#e5ebee] rounded-full text-black items-center">
       <div className={buttonVariants({ variant: "ghost" })}>
         <ArrowBigUp className="h-5 w-5 text-zinc-700" />
       </div>
