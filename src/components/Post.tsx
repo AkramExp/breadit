@@ -1,9 +1,20 @@
+"use client";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/DropdownMenu";
 import { formatTimeToNow } from "@/lib/utils";
 import { Post as PostType, User, Vote } from "@prisma/client";
-import { MessageSquare } from "lucide-react";
-import React, { useRef } from "react";
+import { Ellipsis, MessageSquare, Trash2 } from "lucide-react";
+import { useRef, useState } from "react";
 import EditorOutput from "./EditorOutput";
 import PostVoteClient from "./post-vote/PostVoteClient";
+import PostDeleteConfirmation from "./PostDeleteConfirmation";
+import { Button } from "./ui/Button";
+import { useSession } from "next-auth/react";
 
 type PartialVote = Pick<Vote, "type">;
 
@@ -23,9 +34,37 @@ const Post = ({
   currentVote,
 }: PostProps) => {
   const pRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
 
   return (
-    <div className="rounded-md bg-white shadow">
+    <div className="relative rounded-md bg-white shadow">
+      {session?.user.id === post.authorId && (
+        <>
+          {" "}
+          <DropdownMenu modal={false}>
+            <DropdownMenuTrigger className="absolute top-2 right-2">
+              <Ellipsis />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem onClick={() => setOpen(true)}>
+                <Button
+                  variant="destructive"
+                  className="text-md flex items-center gap-2 bg-red-500"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  Delete
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <PostDeleteConfirmation
+            postId={post.id}
+            open={open}
+            setOpen={setOpen}
+          />
+        </>
+      )}
       <div className="px-6 py-4 flex flex-col sm:flex-row justify-between">
         <div className="w-full sm:w-0 -order-10 sm:order-1 flex-1">
           <div className="max-h-40 mt-1 text-xs text-gray-500">
