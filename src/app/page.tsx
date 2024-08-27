@@ -4,7 +4,6 @@ import { buttonVariants } from "@/components/ui/Button";
 import { getAuthSession } from "@/lib/auth";
 import { HomeIcon } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 
 const Home = async () => {
   const session = await getAuthSession();
