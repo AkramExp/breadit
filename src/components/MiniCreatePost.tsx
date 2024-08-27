@@ -43,12 +43,12 @@ const MiniCreatePost = ({ session }: MiniCreatePostProps) => {
           <ImageIcon className="text-zinc-600" />
         </Button>
 
-        <Button
+        {/* <Button
           onClick={() => router.push(pathname + "/submit")}
           variant="ghost"
         >
           <Link2 className="text-zinc-600" />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

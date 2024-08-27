@@ -85,6 +85,7 @@ const SearchBar: FC<SearchBarProps> = ({}) => {
                       router.push(`/r/${e}`);
                       router.refresh();
                     }}
+                    className="cursor-pointer"
                     key={subreddit.id}
                     value={subreddit.name}
                   >

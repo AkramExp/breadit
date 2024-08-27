@@ -9,7 +9,7 @@ import TextareaAutosize from "react-textarea-autosize";
 import { z } from "zod";
 
 import { toast } from "@/hooks/use-toast";
-import { uploadFiles, useUploadThing } from "@/lib/uploadthing";
+import { useUploadThing } from "@/lib/uploadthing";
 import { PostCreationRequest, PostValidator } from "@/lib/validators/post";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
