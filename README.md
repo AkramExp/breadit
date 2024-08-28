@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Reddit Clone
 
-## Getting Started
+Reddit Clone is a dynamic and engaging platform that mimics the core functionalities of Reddit, allowing users to create and explore discussions based on shared interests.
 
-First, run the development server:
+![s1](https://github.com/AkramExp/reddit/blob/main/public/screenshot.png)
+
+## Features
+
+The Reddit Clone offers a range of community-driven features, as listed below
+
+- **Create your account**
+  - Sign up and log in to your account to join discussions
+- **Subreddit Creation**
+  - Create subreddits (community topics) where users can post content around specific interests
+- **Create and Delete Posts**
+  - Users can submit posts to subreddits or delete them as needed
+- **Comment on Posts**
+  - Engage with other users’ content by leaving comments
+- **Upvote and Downvote**
+  - Rate posts and comments with upvotes or downvotes to signal their quality or relevance
+- **Follow Subreddits**
+  - Subscribe to subreddits to get tailored content on your home feed based on your interests
+- **Home Feed Personalization**
+  - View the latest posts from subreddits you follow
+
+## Tech Stack
+
+- **HTML**
+- **Tailwind CSS**
+- **Typescript**
+- **Next.js**
+- **MongoDB**
+- **Prisma**
+
+## Installation
+
+### Start the next server
+
+Add these env variables to your .env file in the root directory
+
+```
+GOOGLE_CLIENT_ID =
+GOOGLE_CLIENT_SECRET =
+
+DATABASE_URL =
+NEXTAUTH_SECRET =
+
+REDIS_URL =
+REDIS_SECRET =
+
+UPLOADTHING_SECRET =
+UPLOADTHING_APP_ID =
+```
+
+Install Dependencies
+
+```bash
+npm install
+```
+
+Run the server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
