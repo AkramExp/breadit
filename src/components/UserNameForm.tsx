@@ -75,6 +75,7 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
       onSubmit={handleSubmit((e) => {
         updateUsername(e);
       })}
+      className="w-full"
     >
       <Card>
         <CardHeader>
@@ -93,12 +94,7 @@ const UserNameForm = ({ user }: UserNameFormProps) => {
             <Label className="sr-only" htmlFor="name">
               Name
             </Label>
-            <Input
-              id="name"
-              className="w-[400px] pl-6 "
-              size={32}
-              {...register("name")}
-            />
+            <Input id="name" className="pl-6" size={32} {...register("name")} />
             {errors.name && (
               <p className="px-1 text-xs text-red-600">{errors.name.message}</p>
             )}

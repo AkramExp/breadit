@@ -40,14 +40,14 @@ const page = async ({ params }: PageProps) => {
   if (!subreddit) return notFound();
 
   return (
-    <>
+    <div className="pt-20 sm:pt-0 flex flex-col gap-4">
       <h1 className="font-bold text-3xl md:text-4xl h-14 -mt-20 md:mt-0">
         r/{subreddit.name}
       </h1>
       <MiniCreatePost session={session} />
 
       <PostFeed initialPosts={subreddit.posts} subredditName={subreddit.name} />
-    </>
+    </div>
   );
 };
 
